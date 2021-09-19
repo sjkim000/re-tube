@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { Typography, Button, Form, Message, Input, Icon, message } from 'antd'
+import { Typography, Button, Form, message, Input, Icon } from 'antd'
 import Dropzone from 'react-dropzone'
 import Axios from 'axios'
 import { useSelector } from 'react-redux'
-import { response } from 'express'
 
 const { TextArea } = Input
 const { Title } = Typography
@@ -18,7 +17,7 @@ const CategoryOptions = [
     {value: 3, label: 'Pets & Animals'}
 ]
 
-function VideoUploadPage() {
+function VideoUploadPage(props) {
     const user = useSelector(state => state.user)
     const [VideoTitle, setVideoTitle] = useState('')
     const [Description, setDescription] = useState('')
@@ -92,7 +91,10 @@ function VideoUploadPage() {
         Axios.post('/api/video/uploadVideo', fileInfo)
         .then(response => {
             if(response.data.success) {
-                console.log(response.data.success)
+                message.success('성공적으로 업로드 되었습니다.')
+                setTimeout(() => {
+                    props.history.push('/')
+                }, 3000)
             } else {
                 alert('비디오 업로드에 실패했습니다.')
             }

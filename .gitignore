@@ -122,3 +122,5 @@ yarn-error.log*
 # Custom
 dev.js
 .vscode/
+uploads/
+uploads/thumbnails/

@@ -40,10 +40,20 @@ router.post('/uploadfiles', (req, res) => {
 
 router.post('/uploadVideo', (req, res) => {
     //비디오 정보들을 DB에 저장한다.
-    const video = new Video(req.body)           //몽고DB에 저장
-    video.save((err, doc) => {
+    const video = new Video(req.body)           
+    video.save((err, doc) => {          //몽고DB에 저장
         if(err) return res.json({ success: false, err })
         res.status(200).json({ success: true })
+    })
+})
+
+router.get('/getVideos', (req, res) => {
+    //비디오 정보를 DB에서 가져와서 클라이언트에 제공
+    Video.find()
+    .populate('writer')         //user정보를 참조하여 검색해 온다
+    .exec((err, videos) => {
+        if(err) return res.status(400).send(err)
+        res.status(200).json({ success: true, videos})
     })
 })
 
