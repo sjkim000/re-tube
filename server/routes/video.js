@@ -57,6 +57,16 @@ router.get('/getVideos', (req, res) => {
     })
 })
 
+router.post('/getVideoDetail', (req, res) => {
+    //단일 비디오 정보를 DB에서 가져와서 클라이언트에 제공 body를 참조하므로 post형식
+    Video.findOne({ '_id': req.body.videoId })
+    .populate('writer')         //user정보를 참조하여 검색해 온다
+    .exec((err, videoDetail) => {
+        if(err) return res.status(400).send(err)
+        res.status(200).json({ success: true, videoDetail })
+    })
+})
+
 router.post('/thumbnail', (req, res) => {
     //썸네일 생성하고 비디오 러닝타임 취득
 
