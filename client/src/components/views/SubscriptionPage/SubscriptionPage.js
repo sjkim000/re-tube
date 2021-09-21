@@ -6,15 +6,17 @@ import Axios from 'axios';
 const { Title } = Typography
 const { Meta } = Card
 
-function LandingPage() {
+function SubscriptionPage() {
 
     const [Video, setVideo] = useState([])      //state개설
 
     useEffect(() => {       //DOM이 로드되면 실행된다
-        Axios.get('/api/video/getVideos')
+        const SubscriptionInfo = {
+            userFrom: localStorage.getItem('userId')
+        }
+        Axios.post('/api/video/getSubscriptionVideos', SubscriptionInfo)
         .then(response => {
             if(response.data.success) {
-                console.log(response.data)
                 setVideo(response.data.videos)      //state에 저장
             } else {
                 alert('비디오 가져오기를 실패했습니다.')
@@ -58,6 +60,7 @@ function LandingPage() {
             </Row>
         </div>
     )
+
 }
 
-export default LandingPage
+export default SubscriptionPage

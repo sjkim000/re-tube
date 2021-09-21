@@ -3,8 +3,8 @@ const router = express.Router();
 const { Video } = require("../models/Video");
 const { auth } = require("../middleware/auth");
 const multer = require('multer')
-const ffmpeg = require('fluent-ffmpeg')
-
+const ffmpeg = require('fluent-ffmpeg');
+const { Subscriber } = require('../models/Subscriber');
 
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -45,6 +45,27 @@ router.post('/uploadVideo', (req, res) => {
         if(err) return res.json({ success: false, err })
         res.status(200).json({ success: true })
     })
+})
+
+router.post('/getSubscriptionVideos', (req, res) => {
+    //구독된 비디오 정보들을 클라이언트에게 제공한다.
+    //자신의 ID를 가지고 구독하는 사람들을 찾는다.
+    Subscriber.find({ userFrom: req.body.userFrom })    //내가 구독하는 레코드를 다 가져와(중복은 없으므로)
+    .exec(( err, subscriberInfo ) => {
+        if(err) return res.status(400).send(err)
+        let subscribedUser = []                         //내가 구독하는 사람의 _id가 담길 배열
+        subscriberInfo.map((subscriber, i) => {         //레코드만큼 돌리면서, 하나씩을 subscriber에 넣고 
+            subscribedUser.push(subscriber.userTo)      //_id만 배열에 넣어준다.
+        })
+        //찾은 사람들의 비디오를 가져온다
+        Video.find({ writer: {$in: subscribedUser} })       //여러 유저의 비디오를 찾아준다.
+        .populate('writer')
+        .exec((err, videos) => {
+            if(err) return res.status(400).send(err)
+            res.status(200).json({ success: true, videos})
+        })
+    })
+
 })
 
 router.get('/getVideos', (req, res) => {
