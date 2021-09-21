@@ -32,4 +32,26 @@ router.post('/subscribed', (req, res) => {
 
 })
 
+//구독 취소 처리
+router.post('/unSubscribe', (req, res) => {
+
+    Subscriber.findOneAndDelete({userTo:req.body.userTo, userFrom:req.body.userFrom})
+    .exec((err, doc) => {
+        if(err) return res.status(400).json({ success: false, err})
+        return res.status(200).json({ success: true, doc })
+    })
+
+})
+
+//구독 처리
+router.post('/subscribe', (req, res) => {
+    const subscriber = new Subscriber(req.body)
+    subscriber.save((err, doc) => {
+        if(err) return res.status(400).json({ success: false, err})
+        return res.status(200).json({ success: true, doc })
+    })
+
+
+})
+
 module.exports = router;
