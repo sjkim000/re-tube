@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 
-const videochema = mongoose.Schema({
+const videoSchema = mongoose.Schema({
 
     writer: {
         type: Schema.Types.ObjectId,      //이렇게 불러오면 User모델의 해당 정보를 모두 긁어 올 수 있다.
@@ -38,6 +38,6 @@ const videochema = mongoose.Schema({
 }, { timestamps: true })
 
 
-const Video = mongoose.model('Video', videochema)
+const Video = mongoose.model('Video', videoSchema)
 
 module.exports = { Video }

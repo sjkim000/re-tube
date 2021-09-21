@@ -20,14 +20,12 @@ function LandingPage() {
                 alert('비디오 가져오기를 실패했습니다.')
             }
         })
-        
     }, [])                  //[]이 비어있으면 한 번만 실행
     const renderCards = Video.map((video, index) => {
         let minutes = Math.floor(video.duration / 60)
         let seconds = Math.floor(video.duration - minutes * 60)
 
-        return (
-            <Col lg={6} md={8} xs={24}>
+        return <Col lg={6} md={8} xs={24}>
             <a href={`/video/${video._id}`}>
                 <div style={{ position: 'relative' }}>
                     <img style={{ width: '100%' }} src={`http://localhost:5000/${video.thumbnail}`} alt="thumbnail" />
@@ -45,7 +43,7 @@ function LandingPage() {
             <span>{video.writer.name}</span><br />
             <span style={{ margineLeft: '3rem' }}>{video.views} views</span> - <span>{moment(video.createdAt).format("YYYY년 MM월 DD일")}</span>
         </Col>
-        )
+        
     })
 
     return (
