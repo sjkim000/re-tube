@@ -27,7 +27,7 @@ function LoginPage(props) {
         email: initialEmail,
         password: '',
       }}
-      validationSchema={Yup.object().shape({
+      validationSchema={Yup.object().shape({    //Yup을 사용하여 리얼타임 입력 바리데이션 체크
         email: Yup.string()
           .email('Email is invalid')
           .required('Email is required'),
@@ -44,8 +44,10 @@ function LoginPage(props) {
 
           dispatch(loginUser(dataToSubmit))
             .then(response => {
+              console.log(response)
               if (response.payload.loginSuccess) {
                 window.localStorage.setItem('userId', response.payload.userId);
+                window.localStorage.setItem('userName', response.payload.userName);
                 if (rememberMe === true) {
                   window.localStorage.setItem('rememberMe', values.email);
                 } else {

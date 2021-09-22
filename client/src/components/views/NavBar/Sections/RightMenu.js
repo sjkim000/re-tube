@@ -1,13 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useState }  from 'react';
 import { Menu } from 'antd';
 import axios from 'axios';
 import { USER_SERVER } from '../../../Config';
 import { withRouter } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
 function RightMenu(props) {
   const user = useSelector(state => state.user)
+  
+  //Test
+  //console.log(user.userData)
 
   const logoutHandler = () => {
     axios.get(`${USER_SERVER}/logout`).then(response => {
@@ -18,7 +21,9 @@ function RightMenu(props) {
       }
     });
   };
-
+  
+  //if (user.userData && !user.userData.isAuth) console.log(user.userData)
+  //user.userData.isAuth가 안읽히는 상태임!!!
   if (user.userData && !user.userData.isAuth) {   //로그인 안된 사람
     return (
       <Menu mode={props.mode}>
@@ -37,7 +42,7 @@ function RightMenu(props) {
           <a href="/video/upload">Video</a>
         </Menu.Item>
         <Menu.Item key="logout">
-          <a onClick={logoutHandler}>Logout</a>
+          <a onClick={logoutHandler}>Logout({localStorage.getItem("userName")})</a>
         </Menu.Item>
       </Menu>
     )
