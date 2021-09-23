@@ -12,7 +12,7 @@ function Subscribe(props) {
         .then( response => {
             if(response.data.success) {
                 setSubscribeNumber(response.data.subscribeNumber)
-                console.log(response.data)
+                // console.log(response.data)
             } else {
                 alert('구독자 수 정보를 가져올 수 없습니다.')
             }
@@ -23,7 +23,7 @@ function Subscribe(props) {
         .then( response => {
             if(response.data.success) {
                 setSubscribed(response.data.subscribed)
-                console.log(response.data)
+                // console.log(response.data)
             } else {
                 alert('정보를 가져올 수 없습니다.')
             }

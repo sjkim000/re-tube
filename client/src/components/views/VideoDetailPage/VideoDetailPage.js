@@ -3,6 +3,7 @@ import { Row, Col, List, Avatar  } from 'antd'
 import Axios from 'axios'
 import SideVideo from './Section/SideVideo'
 import Subscribe from './Section/Subscribe'
+import Comment from './Section/Comment'
 
 function VideoDetailPage(props) {
 
@@ -22,13 +23,16 @@ function VideoDetailPage(props) {
         })
     }, [])
     if (VideoDetail.writer) {
+        //let a = true && 'test'  //를 하면 a에는 test가 들어감. false의 경우에는 a에 false가 들어감 
+        const subscribeButton = VideoDetail.writer._id !== localStorage.getItem('userId') && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')} /> 
+
         return (
             <Row gutter={[16, 16]}>
                 <Col lg={18} xs={24} >
                     <div style={{ width: '100%', padding: '3rem 4rem' }}>
                         <video style={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls />
                         <List.Item
-                            actions={[<Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem('userId')} />]}       //컴포넌트는 Subscribe.js에 정의
+                            actions={[subscribeButton]}       //컴포넌트는 Subscribe.js에 정의
                         >
                             <List.Item.Meta
                                 avatar={<Avatar src={VideoDetail.writer.image} />}  //모델에서 populate을 했기 때문에 writer정보를 모두 가지고 있다 
@@ -38,6 +42,7 @@ function VideoDetailPage(props) {
                         </List.Item>
     
                         {/* 코맨트 입력란 */}
+                        <Comment postId={videoId}/>
     
                     </div>
                 </Col>
