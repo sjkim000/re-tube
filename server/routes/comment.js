@@ -8,7 +8,7 @@ const { Comment } = require("../models/Comment");
 //             Comment
 //=================================
 
-//구독자 정보를 가져와서 갯수를 리턴
+//코맨트를 받아와서 DB에 저장
 router.post('/saveComment', (req, res) => {
     // console.log('here')
     const comment = new Comment(req.body)
@@ -25,5 +25,15 @@ router.post('/saveComment', (req, res) => {
 
 })
 
+//코맨트정보를 클라이언트측에 전달
+router.post('/getComments', (req, res) => {
+    Comment.find({'postId': req.body.videoId})
+    .populate('writer')
+    .exec((err, comments) => {
+        if(err) return res.status(400).send(err)
+        res.status(200).json({ success: true, comments })
+    })
+
+})
 
 module.exports = router;
