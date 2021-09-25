@@ -4,6 +4,7 @@ import Axios from 'axios'
 import SideVideo from './Section/SideVideo'
 import Subscribe from './Section/Subscribe'
 import Comment from './Section/Comment'
+import LikeDislikes from './Section/LikeDislikes'
 
 function VideoDetailPage(props) {
 
@@ -50,7 +51,7 @@ function VideoDetailPage(props) {
                     <div style={{ width: '100%', padding: '3rem 4rem' }}>
                         <video style={{ width: '100%' }} src={`http://localhost:5000/${VideoDetail.filePath}`} controls />
                         <List.Item
-                            actions={[subscribeButton]}       //컴포넌트는 Subscribe.js에 정의
+                            actions={[<LikeDislikes video userId={localStorage.getItem('userId')} videoId={videoId}/>, subscribeButton]}       //컴포넌트는 Subscribe.js에 정의
                         >
                             <List.Item.Meta
                                 avatar={<Avatar src={VideoDetail.writer.image} />}  //모델에서 populate을 했기 때문에 writer정보를 모두 가지고 있다 
