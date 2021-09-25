@@ -37,6 +37,7 @@ function VideoDetailPage(props) {
     const refreshFunction = (newComment) => {           //새로 추가된 코멘트를 가져와서 추가
         setComments(Comments.concat(newComment))
         console.log('refreshFunction!')
+        console.log(newComment)
     }
 
     if (VideoDetail.writer) {
@@ -59,7 +60,7 @@ function VideoDetailPage(props) {
                         </List.Item>
     
                         {/* 코맨트 입력란 */}
-                        <Comment refreshFunction ={refreshFunction} commentLists={Comments} postId={videoId}/>
+                        <Comment refreshFunction ={refreshFunction} commentLists={Comments} videoId={videoId}/>
     
                     </div>
                 </Col>

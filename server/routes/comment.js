@@ -27,7 +27,7 @@ router.post('/saveComment', (req, res) => {
 
 //코맨트정보를 클라이언트측에 전달
 router.post('/getComments', (req, res) => {
-    Comment.find({'postId': req.body.videoId})
+    Comment.find({'videoId': req.body.videoId})
     .populate('writer')
     .exec((err, comments) => {
         if(err) return res.status(400).send(err)

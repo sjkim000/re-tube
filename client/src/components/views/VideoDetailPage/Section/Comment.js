@@ -2,12 +2,13 @@ import Axios from 'axios'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import SingleComment from './SingleComment'
+import ReplyComment from './ReplyComment'
 
 function Comment(props) {
     // console.log(props)
     const user = useSelector(state => state.user)
     const [CommentValue, setCommentValue] = useState('')
-    const videoId = props.postId
+    const videoId = props.videoId
     const handleClick = (event) => {
         setCommentValue(event.currentTarget.value)
     }
@@ -18,12 +19,13 @@ function Comment(props) {
         const postInfo = {
             content: CommentValue,
             writer: user.userData._id,
-            postId: videoId
+            videoId: videoId
         }
         Axios.post('/api/comment/saveComment', postInfo)
         .then(response => {
             if(response.data.success) {
                 // console.log(response.data.result)
+                setCommentValue('')     //코멘트 입력란을 비운다
                 props.refreshFunction(response.data.result)    //부모로부터 props을 통해 받아온 펑션을 통해 정보를 넘김
                 console.log(postInfo)
             } else {
@@ -42,7 +44,10 @@ function Comment(props) {
             {/* Comment Lists */}
             {props.commentLists && props.commentLists.map((comment, index) => (
                 (!comment.responseTo &&
-                    <SingleComment refreshFunction={props.refreshFunction} comment={comment} postId={videoId} />
+                    <React.Fragment>
+                        <SingleComment refreshFunction={props.refreshFunction} comment={comment} videoId={videoId} />
+                        <ReplyComment refreshFunction={props.refreshFunction} parentCommentId={comment._id} commentLists={props.commentLists} videoId={videoId} />
+                    </React.Fragment>
                 )
             ))}
 

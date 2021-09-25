@@ -9,7 +9,7 @@ const commentSchema = mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    postId: {                           //videoId로 했어야 일관성이 있다. 언젠가는 수정하자
+    videoId: {                           //videoId로 했어야 일관성이 있다. 언젠가는 수정하자
         type: Schema.Types.ObjectId,
         ref: 'Video'
     },
