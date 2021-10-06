@@ -1,16 +1,12 @@
-Hello, My Friends  
-Thank you for having interest in this repository ! 
+自作動画配信システム
+Server - Clientが分離されてない
 
-To use this application, 
+起動方法
 
-1. make dev.js file inside config folder 
-2. put mongoDB info into dev.js file 
-3. Type  " npm install " inside the root directory  ( Download Server Dependencies ) 
-4. Type " npm install " inside the client directory ( Download Front-end Dependencies )
+Backend
+npm run backend
 
-Server Start:
-Type "npm run dev" inside the root directory
-
-
+Frontend
+npm run start
 
 
